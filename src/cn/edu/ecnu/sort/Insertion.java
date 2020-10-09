@@ -2,6 +2,9 @@ package cn.edu.ecnu.sort;
 
 /**
  * 插入排序
+ * 平均情况下需要N^2/4次比较，N^2/4次交换
+ * 最好情况下（有序）：N-1次比较，0次交换
+ * 最坏情况下（无序）：
  */
 public class Insertion {
     public static void sort(Comparable[] a) {
