@@ -1,20 +1,31 @@
 package cn.edu.ecnu.sort;
 
-import edu.princeton.cs.algs4.StdOut;
-
 /**
- * 插入排序
- * 平均情况下需要N^2/4次比较，N^2/4次交换
- * 最好情况下（有序）：N-1次比较，0次交换
- * 最坏情况下（无序）：N^2/2次比较，N^2/2次排序
+ * 带哨兵的插入排序
  */
-public class Insertion {
+public class InsertionX {
     public static void sort(Comparable[] a) {
         int N = a.length;
-        for (int i = 0; i < N; i++) {
-            for (int j = i; j > 0 && less(a[j], a[j - 1]); j--) {
-                exch(a, j, j-1);
+        // 找到最小的元素（可以用冒泡排序
+        int exchanges = 0;
+        for (int i = N - 1; i > 0; i--) {
+            if (less(a[i], a[i - 1])) {
+                exch(a, i, i - 1);
+                exchanges++;
             }
+        }
+        if (exchanges == 0) return;
+        // 插入排序
+        for (int i = 2; i < N; i++) {
+            // 哨兵v
+            Comparable v = a[i];
+            int j = i;
+            while (less(v, a[j-1])){
+                // 后移
+                a[j] = a[j-1];
+                j--;
+            }
+            a[j] = v;
         }
     }
 
@@ -47,6 +58,5 @@ public class Insertion {
         sort(a);
         assert isSorted(a);
         show(a);
-     }
-
+    }
 }

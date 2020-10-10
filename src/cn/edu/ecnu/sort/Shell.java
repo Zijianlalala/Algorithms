@@ -1,20 +1,25 @@
 package cn.edu.ecnu.sort;
 
-import edu.princeton.cs.algs4.StdOut;
-
 /**
- * 插入排序
- * 平均情况下需要N^2/4次比较，N^2/4次交换
- * 最好情况下（有序）：N-1次比较，0次交换
- * 最坏情况下（无序）：N^2/2次比较，N^2/2次排序
+ * 希尔排序
+ * 对比插入排序：交换不相邻的元素以对数组的局部进行排序
+ * 换句话说，插入排序就是h=1的希尔排序
+ * 运行时间达不到平方级别
  */
-public class Insertion {
+public class Shell {
     public static void sort(Comparable[] a) {
         int N = a.length;
-        for (int i = 0; i < N; i++) {
-            for (int j = i; j > 0 && less(a[j], a[j - 1]); j--) {
-                exch(a, j, j-1);
+        int h = 1;
+        // 计算递增序列
+        while (h < N / 3) h = h * 3 + 1;
+        while (h >= 1) {
+            for (int i = h; i < N; i++) {
+                // 从后往前比较
+                for (int j = i; j >= h && less(a[j], a[j - h]); j -= h) {
+                    exch(a, j, j - h);
+                }
             }
+            h /= 3;
         }
     }
 
@@ -41,12 +46,5 @@ public class Insertion {
         }
         return true;
     }
-
-    public static void main(String[] args) {
-        Integer[] a = {3, 1, 2, 5, 4};
-        sort(a);
-        assert isSorted(a);
-        show(a);
-     }
 
 }
