@@ -42,6 +42,9 @@ public class Inversions {
     public static void main(String[] args) {
         int a[] = {3, 1, 4, 2};
         System.out.println(count(a));
+        for (int v : a
+        ) {
+            System.out.print(v + ",");
+        }
     }
-
 }
